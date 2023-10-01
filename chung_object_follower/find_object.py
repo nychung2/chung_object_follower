@@ -65,7 +65,7 @@ class FindObject(Node):
         msg = Point()
         msg.x = x
         msg.y = y
-	msg.z = 0
+        msg.z = 0
         self.objloc_publisher.publish(msg)
         self.get_logger().info("Location of Object - Publishing: %s" %msg.data)
 

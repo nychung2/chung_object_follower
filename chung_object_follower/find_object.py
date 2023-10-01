@@ -21,7 +21,7 @@ class FindObject(Node):
         
         self.kernel = np.ones((5,5), np.uint16)
 
-        self.color = [84, 79, 65] # HSV
+        self.color = [170, 9, 51] # HSV
         self.hue = 5
         self.sat = 50
         self.val = 50
@@ -65,9 +65,9 @@ class FindObject(Node):
         msg = Point()
         msg.x = x
         msg.y = y
-        msg.z = 0
+        msg.z = 0.0
         self.objloc_publisher.publish(msg)
-        self.get_logger().info("Location of Object - Publishing: %s" %msg.data)
+        self.get_logger().info("Location of Object - Publishing: %s, %s, %s" %(msg.x, msg.y, msg.z))
 
     def get_object_location(self, contours):
         if len(contours) != 0:

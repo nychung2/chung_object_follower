@@ -31,12 +31,16 @@ class RotateObject(Node):
 
         if x < self.cam_left_boundary: # turn left
             twist_msg = Twist()
-            twist_msg.data = [0, 1]
+            twist_msg.angular.z = 1.0
             self.vel_publisher.publish(twist_msg)
         elif x > self.cam_right_boundary: # turn right
             twist_msg = Twist()
-            twist_msg.data = [0, -1]
+            twist_msg.angular.z = -1.0
             self.vel_publisher.publish(twist_msg)
+		else:
+			twist_msg = Twist()
+			twist_msg.angular.z = 0
+			self.vel_publisher.publish(twist_msg)
 
         
 

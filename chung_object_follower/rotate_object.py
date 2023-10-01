@@ -7,7 +7,7 @@ from geometry_msgs.msg import Point, Twist
 import numpy as np
 import sys
 
-class RotateObject(node):
+class RotateObject(Node):
     def __init__(self):
         super().__init__('rotate_object')
 
@@ -15,7 +15,7 @@ class RotateObject(node):
         self.cam_left_boundary = self.cam_width / 3
         self.cam_right_boundary = 2 * self.cam_width / 3
 
-        self.loc_subscriber = self.create_subsription(
+        self.loc_subscriber = self.create_subscription(
             Point,
             '/obj_location',
             self.callback,
@@ -27,7 +27,7 @@ class RotateObject(node):
         self.vel_publisher
 
     def callback(self, msg):
-        x = msg.data[0]
+        x = msg.x
 
         if x < self.cam_left_boundary: # turn left
             twist_msg = Twist()

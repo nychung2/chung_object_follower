@@ -8,7 +8,7 @@ from geometry_msgs.msg import Point
 
 import numpy as np
 import cv2
-from cv_bridge import CVBridge
+from cv_bridge import CvBridge
 import sys
 
 
@@ -33,9 +33,9 @@ class FindObject(Node):
         image_qos_profile.reliability = QoSReliabilityPolicy.BEST_EFFORT 
 
         # make subcription to compressed image
-        self.img_subscriber = self.create_subsription(
+        self.img_subscriber = self.create_subscription(
             CompressedImage,
-            '/simulated_camera/image_raw/compressed', # /image_raw/compressed <- real | sim -> /simulated_camera/image_raw/compressed
+            '/image_raw/compressed', # /image_raw/compressed <- real | sim -> /simulated_camera/image_raw/compressed
             self.callback,
             image_qos_profile)
         
@@ -47,8 +47,8 @@ class FindObject(Node):
     def callback(self, CompressedImage):
         imgBGR = CvBridge().compressed_imgmsg_to_cv2(CompressedImage, "bgr8")
         hsv_frame = cv2.cvtColor(imgBGR, cv2.COLOR_BGR2HSV)
-        low_bound = np.array([color[0]-self.hue, color[1]-self.sat, color[2]-self.val])
-        high_bound = np.array([color[0]+self.hue, color[1]+self.sat, color[2]+self.val])
+        low_bound = np.array([self.color[0]-self.hue, self.color[1]-self.sat, self.color[2]-self.val])
+        high_bound = np.array([self.color[0]+self.hue, self.color[1]+self.sat, self.color[2]+self.val])
         hsv_threshold = cv2.inRange(hsv_frame, low_bound, high_bound)
         close_dialation = cv2.dilate(hsv_threshold, self.kernel, iterations=1)
         close_erosion = cv2.erode(close_dialation, self.kernel, iterations=1)
@@ -58,12 +58,14 @@ class FindObject(Node):
         if len(contours) != 0:
             x, y, w, h = self.get_object_location(contours)
             cx, cy = self.get_center(x,y,w,h)
-            self.objloc_publisher.publish(cx,cy)
+            self.publish_message(cx,cy)
 
 
     def publish_message(self, x, y):
         msg = Point()
-        msg.data = [x, y, 0]
+        msg.x = x
+        msg.y = y
+	msg.z = 0
         self.objloc_publisher.publish(msg)
         self.get_logger().info("Location of Object - Publishing: %s" %msg.data)
 

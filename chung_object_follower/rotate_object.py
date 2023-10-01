@@ -37,10 +37,10 @@ class RotateObject(Node):
             twist_msg = Twist()
             twist_msg.angular.z = -1.0
             self.vel_publisher.publish(twist_msg)
-		else:
-			twist_msg = Twist()
-			twist_msg.angular.z = 0
-			self.vel_publisher.publish(twist_msg)
+        else:
+            twist_msg = Twist()
+            twist_msg.angular.z = 0
+            self.vel_publisher.publish(twist_msg)
 
         
 

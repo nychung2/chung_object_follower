@@ -20,6 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'finder = chung_object_follower.find_object:main',
+            'rotator = chung_object_follower.rotate_object:main'
         ],
     },
 )

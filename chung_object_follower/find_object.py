@@ -72,7 +72,7 @@ class FindObject(Node):
     def get_object_location(self, contours):
         if len(contours) != 0:
             c = max(contours, key = cv2.contourArea)
-            if cv2.area(c) < 50:
+            if cv2.contourArea(c) < 100:
                 return 160, 120, 0 ,0 # aka dont move
             x,y,w,h = cv2.boundingRect(c)
             return x, y, w ,h

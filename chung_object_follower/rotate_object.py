@@ -12,8 +12,8 @@ class RotateObject(Node):
         super().__init__('rotate_object')
 
         self.cam_width = 320
-        self.cam_left_boundary = self.cam_width / 3
-        self.cam_right_boundary = 2 * self.cam_width / 3
+        self.cam_left_boundary = 4*self.cam_width / 10
+        self.cam_right_boundary = 6 * self.cam_width / 10
 
         self.loc_subscriber = self.create_subscription(
             Point,
@@ -31,11 +31,11 @@ class RotateObject(Node):
 #rotate order. make twist 0 at first then if X< or > then change msg. 
         if x < self.cam_left_boundary: # turn left
             twist_msg = Twist()
-            twist_msg.angular.z = 1.0
+            twist_msg.angular.z = 0.75
             self.vel_publisher.publish(twist_msg)
         elif x > self.cam_right_boundary: # turn right
             twist_msg = Twist()
-            twist_msg.angular.z = -1.0
+            twist_msg.angular.z = -0.75
             self.vel_publisher.publish(twist_msg)
         else:
             twist_msg = Twist()

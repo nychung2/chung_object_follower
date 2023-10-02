@@ -21,8 +21,8 @@ class FindObject(Node):
         
         self.kernel = np.ones((5,5), np.uint16)
 
-        self.color = [170, 9, 51] # HSV
-        self.hue = 5
+        self.color = [110, 120, 90] # HSV
+        self.hue = 10
         self.sat = 50
         self.val = 50
 

@@ -28,7 +28,7 @@ class RotateObject(Node):
 
     def callback(self, msg):
         x = msg.x
-
+#rotate order. make twist 0 at first then if X< or > then change msg. 
         if x < self.cam_left_boundary: # turn left
             twist_msg = Twist()
             twist_msg.angular.z = 1.0
@@ -39,7 +39,7 @@ class RotateObject(Node):
             self.vel_publisher.publish(twist_msg)
         else:
             twist_msg = Twist()
-            twist_msg.angular.z = 0
+            twist_msg.angular.z = 0.0
             self.vel_publisher.publish(twist_msg)
 
         
